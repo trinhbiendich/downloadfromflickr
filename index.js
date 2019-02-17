@@ -7,8 +7,8 @@ var urlx = require('url');
 
 var flickrX = require("flickrapi");
 var flickrOptions = {
-    api_key: "770751f3275ea71592ca2215c3f6004d",
-    secret: "f925f10ed7c99698"
+    api_key: "77074351f3275ea71592ca2215c3f6004d",
+    secret: "f925rff10ed7c99698"
 };
 
 var dataPath = "datas/";
