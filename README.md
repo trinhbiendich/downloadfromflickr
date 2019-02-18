@@ -1,4 +1,4 @@
-# download from flickr
+# ownload from flickr
 
 ## Go to link to create app
 https://www.flickr.com/services/apps/by/me
