@@ -18,3 +18,6 @@ var userId = "01april";
 </pre>
 
 # Run 
+<pre>
+node index.js
+</pre>
