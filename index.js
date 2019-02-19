@@ -6,10 +6,22 @@ var path = require('path');
 var urlx = require('url');
 var dateFormat = require('dateformat');
 
+const readline = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
+
 var flickrX = require("flickrapi");
-var apiKey = "75604504fc80359d82970fb4e1532190";
-var apiSecret = "f925rff10ed7c99698";
-var userId = "01april";
+var apiKey = "3be1f78e4ffd684826b296bb02f03597";
+var apiSecret = "2c59104f7a62cf18";
+var userId = "137226071@N03";
+
+var flickrOptions = {
+    api_key: apiKey,
+    secret: apiSecret
+};
+
+var rootPath = "datas/";
 var dataPath = "datas/";
 var photoIds = "photoids/";
 var perPage = 100;
@@ -17,24 +29,25 @@ var totalListPhotosPage = 1;
 
 var authFile = "auth/" + dateFormat(new Date(), "yyyy-mm-dd-H") + ".json";
 
-var flickrOptions = {
-    api_key: apiKey,
-    secret: apiSecret
-};
-
 if(fs.existsSync(authFile)) {
     flickrOptions = JSON.parse(fs.readFileSync(authFile, 'utf8'));
-    getListPhotos(flickr, 1);
-} else{
-    flickrX.authenticate(flickrOptions, function(error, flickr) {
+    //xx();
+} else {
+    flickrX.authenticate(flickrOptions, function(err, flickr) {
         flickrOptions = {
             api_key: apiKey,
             secret: apiSecret,
-            user_id: "...",
-            access_token: "...",
-            access_token_secret: "..."
+            user_id: flickr.options.user_id,
+            access_token: flickr.options.access_token,
+            access_token_secret: flickr.options.access_token_secret
         }
         fs.writeFileSync(authFile, JSON.stringify(flickrOptions, null, 2) , 'utf-8');
+       // xx();
+    });
+}
+
+function xx() {
+    flickrX.authenticate(flickrOptions, function(error, flickr) {
         getListPhotos(flickr, 1);
     });
 }
@@ -57,9 +70,19 @@ function downloadNoNeedName (url, folder, callback) {
 }
 
 function getListPhotos(flickrObj, curPage) {
+    dataPath = rootPath + userId + "/";
+    if(!fs.existsSync(dataPath)) {
+        fs.mkdirSync(dataPath);
+    }
     if(curPage > totalListPhotosPage) {
         // toi han
         console.log("Done !!!");
+        readline.question(`The name to download? :`, (name) => {
+          console.log(`Downloading for .. ${name}`)
+          userId = name;
+          readline.close();
+          getListPhotos(flickrObj, 1);
+        })
     } else {
         flickrObj.people.getPhotos({
             "format" : "json",
