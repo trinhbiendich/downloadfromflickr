@@ -4,34 +4,40 @@ var fs = require('fs');
 var md5 = require('md5');
 var path = require('path');
 var urlx = require('url');
+var dateFormat = require('dateformat');
 
 var flickrX = require("flickrapi");
 var apiKey = "75604504fc80359d82970fb4e1532190";
 var apiSecret = "f925rff10ed7c99698";
 var userId = "01april";
+var dataPath = "datas/";
+var photoIds = "photoids/";
+var perPage = 100;
+var totalListPhotosPage = 1;
+
+var authFile = "auth/" + dateFormat(new Date(), "yyyy-mm-dd-H") + ".json";
 
 var flickrOptions = {
     api_key: apiKey,
     secret: apiSecret
 };
 
-var FlickrOptions = {
-    api_key: apiKey,
-    secret: apiSecret,
-    user_id: "...",
-    access_token: "...",
-    access_token_secret: "..."
-}
-
-var dataPath = "datas/";
-var photoIds = "photoids/";
-
-var perPage = 100;
-var totalListPhotosPage = 1;
-
-flickrX.authenticate(flickrOptions, function(error, flickr) {
+if(fs.existsSync(authFile)) {
+    flickrOptions = JSON.parse(fs.readFileSync(authFile, 'utf8'));
     getListPhotos(flickr, 1);
-});
+} else{
+    flickrX.authenticate(flickrOptions, function(error, flickr) {
+        flickrOptions = {
+            api_key: apiKey,
+            secret: apiSecret,
+            user_id: "...",
+            access_token: "...",
+            access_token_secret: "..."
+        }
+        fs.writeFileSync(authFile, JSON.stringify(flickrOptions, null, 2) , 'utf-8');
+        getListPhotos(flickr, 1);
+    });
+}
 
 function download(url, filename, callback){
     request.head(url, function(err, res, body){
