@@ -6,18 +6,28 @@ var path = require('path');
 var urlx = require('url');
 
 var flickrX = require("flickrapi");
+var apiKey = "75604504fc80359d82970fb4e1532190";
+var apiSecret = "f925rff10ed7c99698";
+var userId = "01april";
+
 var flickrOptions = {
-    api_key: "77074351f3275ea71592ca2215c3f6004d",
-    secret: "f925rff10ed7c99698"
+    api_key: apiKey,
+    secret: apiSecret
 };
+
+var FlickrOptions = {
+    api_key: apiKey,
+    secret: apiSecret,
+    user_id: "...",
+    access_token: "...",
+    access_token_secret: "..."
+}
 
 var dataPath = "datas/";
 var photoIds = "photoids/";
 
 var perPage = 100;
 var totalListPhotosPage = 1;
-var apiKey = "75604504fc80359d82970fb4e1532190";
-var userId = "01april";
 
 flickrX.authenticate(flickrOptions, function(error, flickr) {
     getListPhotos(flickr, 1);
