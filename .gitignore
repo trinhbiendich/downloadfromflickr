@@ -4,3 +4,5 @@ datas/
 datas_old/
 node_modules/
 photoids/
+auth/
+auth/*

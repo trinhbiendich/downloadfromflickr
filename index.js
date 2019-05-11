@@ -12,6 +12,7 @@ const readline = require('readline').createInterface({
 })
 
 var flickrX = require("flickrapi");
+<<<<<<< HEAD
 var apiKey = "3be1f78e4ffd684826b296bb02f03597";
 var apiSecret = "2c59104f7a62cf18";
 var userId = "nguyenthientri";
@@ -28,6 +29,22 @@ userId = "155341000@N03";
 userId = "136491103@N08";
 userId = "148094993@N08";
 userId = "jasoncut";
+=======
+var apiKey = "3be1f684826b296bb02f03597";
+var apiSecret = "2c591062cf18";
+var userId = "137226073";
+
+var flickrOptions = {
+    api_key: apiKey,
+    secret: apiSecret
+};
+
+var rootPath = "datas/";
+var dataPath = "datas/";
+var photoIds = "photoids/";
+var perPage = 100;
+var totalListPhotosPage = 1;
+>>>>>>> 772ada41aaf89dcd861359c41236e2c17923a055
 
 userId = "160750797@N08";
 userId = "smooth_couple";
@@ -76,6 +93,7 @@ userId = "144411684@N07"; // Teo David
 var pageStart = 1; // default 1
 var firstStart = true;
 
+<<<<<<< HEAD
 var flickrOptions = {
     api_key: apiKey,
     secret: apiSecret
@@ -99,10 +117,16 @@ var abcCurPage = null;
 
 var authFile = "auth/" + dateFormat(new Date(), "yyyy-mm") + ".json";
 
+=======
+>>>>>>> 772ada41aaf89dcd861359c41236e2c17923a055
 if(fs.existsSync(authFile)) {
     console.log("Load config from file");
     flickrOptions = JSON.parse(fs.readFileSync(authFile, 'utf8'));
+<<<<<<< HEAD
     xx();
+=======
+    //xx();
+>>>>>>> 772ada41aaf89dcd861359c41236e2c17923a055
 } else {
     flickrX.authenticate(flickrOptions, function(err, flickr) {
         if(err) {
@@ -116,13 +140,18 @@ if(fs.existsSync(authFile)) {
                 access_token_secret: flickr.options.access_token_secret
             }
             fs.writeFileSync(authFile, JSON.stringify(flickrOptions, null, 2) , 'utf-8');
+<<<<<<< HEAD
             xx();
+=======
+        // xx();
+>>>>>>> 772ada41aaf89dcd861359c41236e2c17923a055
         }
     });
 }
 
 function xx() {
     flickrX.authenticate(flickrOptions, function(error, flickr) {
+<<<<<<< HEAD
         abcObj = flickr;
         getListPhotos(flickr, pageStart);
         let xxDe = setInterval(function() {
@@ -148,6 +177,9 @@ function xx() {
                 }
             }
         }, 300);
+=======
+        getListPhotos(flickr, 1);
+>>>>>>> 772ada41aaf89dcd861359c41236e2c17923a055
     });
 }
 
@@ -185,23 +217,36 @@ function downloadNoNeedNameBK(url, folder, callback) {
 }
 
 function getListPhotos(flickrObj, curPage) {
+<<<<<<< HEAD
     abcCurPage = curPage;
+=======
+>>>>>>> 772ada41aaf89dcd861359c41236e2c17923a055
     dataPath = rootPath + userId + "/";
     if(!fs.existsSync(dataPath)) {
         fs.mkdirSync(dataPath);
     }
+<<<<<<< HEAD
     if((curPage > totalListPhotosPage) && !firstStart) {
+=======
+    if(curPage > totalListPhotosPage) {
+>>>>>>> 772ada41aaf89dcd861359c41236e2c17923a055
         // toi han
         console.log("Done !!!");
         readline.question(`The name to download? :`, (name) => {
           console.log(`Downloading for .. ${name}`)
           userId = name;
           readline.close();
+<<<<<<< HEAD
           firstStart = true;
           getListPhotos(flickrObj, 1);
         })
     } else if(!pause && !fs.existsSync(pausePath)){
         firstStart = false;
+=======
+          getListPhotos(flickrObj, 1);
+        })
+    } else {
+>>>>>>> 772ada41aaf89dcd861359c41236e2c17923a055
         flickrObj.people.getPhotos({
             "format" : "json",
             "api_key" : apiKey,
